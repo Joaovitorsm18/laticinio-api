@@ -1,0 +1,29 @@
+# .gitignore padrão para projetos Django/DRF
+
+# Pastas de ambiente virtual
+# Ignore a pasta do ambiente virtual onde suas dependências estão instaladas.
+# Pode ser 'env', 'venv', '.env', etc.
+env/
+venv/
+.env/
+
+# Arquivos de bytecode Python
+# Arquivos .pyc e __pycache__ são gerados automaticamente pelo Python.
+__pycache__/
+*.pyc
+*.pyd
+*.pyo
+
+# Arquivos de banco de dados
+# O arquivo db.sqlite3 é o padrão do Django para desenvolvimento.
+# Em produção, você geralmente usará PostgreSQL, MySQL, etc., e o arquivo de banco de dados não estará no controle de versão.
+db.sqlite3
+
+# Mídia e uploads
+# A pasta 'media' contém arquivos enviados pelos usuários e não deve ser versionada.
+media/
+
+
+
+
+
