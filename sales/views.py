@@ -1,5 +1,6 @@
 from rest_framework import generics
 from rest_framework.permissions import IsAuthenticated
+from rest_framework.parsers import JSONParser, MultiPartParser, FormParser
 from django_filters.rest_framework import DjangoFilterBackend
 from sales.models import Sale, SaleItem
 from sales.serializers import SaleSerializer, SaleItemSerializer
@@ -9,6 +10,7 @@ class SaleCreateList(generics.ListCreateAPIView):
     permission_classes = (IsAuthenticated,)
     queryset = Sale.objects.all().order_by('date')
     serializer_class = SaleSerializer
+    parser_classes = [JSONParser, MultiPartParser, FormParser]
 
 class SaleRetrieveUpdateDestroyView(generics.RetrieveUpdateDestroyAPIView):
     permission_classes = (IsAuthenticated,)
