@@ -130,10 +130,11 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
-CORS_ALLOWED_ORIGINS = [
-    'https://laticiniomara.vercel.app',
-    '*'
-]
+# CORS_ALLOWED_ORIGINS = [
+#     'https://laticiniomara.vercel.app'
+# ]
+
+CORS_ALLOW_ALL_ORIGINS = True
 
 # settings.py
 REST_FRAMEWORK = {
