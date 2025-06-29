@@ -1,9 +1,9 @@
 
 # 🧀 API de Vendas para Laticínio
 
-Esta é uma API RESTful desenvolvida com Django e Django REST Framework, voltada para o controle de vendas de um laticínio, incluindo cadastro de clientes, produtos, vendas e geração de relatórios filtráveis.
+Esta é uma API RESTful desenvolvida com Django e Django REST Framework, voltada para o controle de vendas de um laticínio, incluindo cadastro de clientes, produtos, vendas com múltiplos itens e geração de relatórios filtráveis.
 
-Repositório oficial: [github.com/Joaovitorsm18/laticinio-api](https://github.com/Joaovitorsm18/laticinio-api)
+🔗 Repositório oficial: [github.com/Joaovitorsm18/laticinio-api](https://github.com/Joaovitorsm18/laticinio-api)
 
 ---
 
@@ -11,11 +11,11 @@ Repositório oficial: [github.com/Joaovitorsm18/laticinio-api](https://github.co
 
 - 📋 CRUD de clientes (feiras e comércios)
 - 📦 CRUD de produtos (por unidade, litro ou quilo)
-- 💰 Registro de vendas com status e foto de recibo
-- 🧾 Controle detalhado dos itens vendidos por venda
-- 📊 Relatório de vendas com filtros por data, cliente, produto e status
-- 📷 Suporte a upload de imagens (recibo)
-- ✅ Calcula automaticamente total da venda e dos itens
+- 💰 Registro e edição de vendas com múltiplos itens em um único endpoint
+- 📸 Suporte a upload de foto de recibo
+- 🧾 Controle de itens por venda feito exclusivamente através da própria venda
+- 📊 Relatórios com filtros por data, cliente, produto e status
+- ✅ Cálculo automático do total da venda
 
 ---
 
@@ -25,9 +25,9 @@ Repositório oficial: [github.com/Joaovitorsm18/laticinio-api](https://github.co
 - Django 5.2
 - Django REST Framework
 - Django Filters
-- Pillow (para upload de imagens)
-- SQLite (banco de dados local)
-- CORS Headers (liberação de acesso entre origens)
+- Pillow (para imagens)
+- SQLite (para desenvolvimento)
+- CORS Headers
 
 ---
 
@@ -40,7 +40,7 @@ cd laticinio-api
 
 # Crie e ative um ambiente virtual
 python -m venv venv
-source venv/bin/activate  # ou venv\Scripts\activate no Windows
+source venv/bin/activate  # Windows: venv\Scripts\activate
 
 # Instale as dependências
 pip install -r requirements.txt
@@ -48,7 +48,7 @@ pip install -r requirements.txt
 # Execute as migrações
 python manage.py migrate
 
-# Inicie o servidor local
+# Inicie o servidor
 python manage.py runserver
 ```
 
@@ -56,7 +56,7 @@ Acesse: [http://localhost:8000/api/v1/](http://localhost:8000/api/v1/)
 
 ---
 
-## 🌐 Endpoints Principais
+## 🌐 Principais Endpoints
 
 ### Clientes
 - `GET /api/v1/customers/`
@@ -72,22 +72,51 @@ Acesse: [http://localhost:8000/api/v1/](http://localhost:8000/api/v1/)
 - `PUT /api/v1/products/<id>/`
 - `DELETE /api/v1/products/<id>/`
 
-### Vendas
+### Vendas (com gerenciamento de itens incluso)
 - `GET /api/v1/sales/`
 - `POST /api/v1/sales/`
+    - Envia os dados da venda com os itens aninhados
+    - Aceita envio de `receipt_photo` via `multipart/form-data` se necessário
 - `GET /api/v1/sales/<id>/`
 - `PUT /api/v1/sales/<id>/`
+    - Substitui os itens antigos pelos novos
 - `DELETE /api/v1/sales/<id>/`
 
-### Itens da Venda
-- `GET /api/v1/sale-items/`
-- `POST /api/v1/sale-items/`
-- `GET /api/v1/sale-items/<id>/`
-- `PUT /api/v1/sale-items/<id>/`
-- `DELETE /api/v1/sale-items/<id>/`
+> ⚠️ **Importante:** Os itens da venda são criados, atualizados e substituídos exclusivamente através do endpoint da venda.  
+> Não existem endpoints diretos para `sale-items`.
+
 
 ### Relatório de Vendas
-- `GET /api/v1/sales/report?date_after=...&customer=...&status=...`
+- `GET /api/v1/sales/report`
+    - Filtros disponíveis: `date_after`, `date_before`, `customer`, `status`, `product`
+
+## Como criar ou atualizar uma venda
+Exemplo de payload para criação/edição:
+```json
+{
+  "customer": 1,
+  "date": "2025-06-27",
+  "status": "paid",
+  "items": [
+    {
+      "product": 2,
+      "unit": "kg",
+      "quantity": 4.250,
+      "unit_price": 18.00
+    },
+    {
+      "product": 3,
+      "unit": "un",
+      "quantity": 10,
+      "unit_price": 3.50
+    }
+  ]
+}
+```
+- O campo `total_price` de cada item é calculado automaticamente.
+
+- A imagem `receipt_photo` (recibo) pode ser enviada junto, usando `multipart/form-data`.
+
 
 ---
 
