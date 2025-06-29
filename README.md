@@ -60,9 +60,10 @@ Acesse: [http://localhost:8000/api/v1/](http://localhost:8000/api/v1/)
 
 Todos os endpoints (exceto obtenção de tokens) requerem autenticação via JWT.
 
-### Obter Token de Acesso
+### 📥Obter Token de Acesso
 
 - `POST /api/v1/token/`
+
 Payload:
 ```json
 {
@@ -79,6 +80,7 @@ Resposta:
 ```
 ### 🔁Renovar Token de Acesso
 `POST /api/v1/token/refresh/`
+
 Payload:
 ```json
 {
@@ -165,6 +167,7 @@ Exemplo de payload para criação/edição:
 ```
 laticinio-api/
 ├── app/
+├── authentication/
 ├── customers/
 ├── products/
 ├── sales/
