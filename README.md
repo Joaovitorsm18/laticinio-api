@@ -9,6 +9,7 @@ Esta é uma API RESTful desenvolvida com Django e Django REST Framework, voltada
 
 ## 🚀 Funcionalidades
 
+- 🔐 Autenticação via JWT (JSON Web Tokens)
 - 📋 CRUD de clientes (feiras e comércios)
 - 📦 CRUD de produtos (por unidade, litro ou quilo)
 - 💰 Registro e edição de vendas com múltiplos itens em um único endpoint
@@ -55,7 +56,46 @@ python manage.py runserver
 Acesse: [http://localhost:8000/api/v1/](http://localhost:8000/api/v1/)
 
 ---
+## 🔐 Autenticação com JWT
 
+Todos os endpoints (exceto obtenção de tokens) requerem autenticação via JWT.
+
+### Obter Token de Acesso
+
+- `POST /api/v1/token/`
+Payload:
+```json
+{
+  "username": "seu_usuario",
+  "password": "sua_senha"
+}
+```
+Resposta:
+```json
+{
+  "access": "token_de_acesso",
+  "refresh": "token_de_refresh"
+}
+```
+### 🔁Renovar Token de Acesso
+`POST /api/v1/token/refresh/`
+Payload:
+```json
+{
+  "refresh": "token_de_refresh"
+}
+```
+Resposta:
+```json
+{
+  "access": "novo_token_de_acesso"
+}
+```
+### Como usar
+Inclua o token no cabeçalho das requisições:
+```makefile
+Authorization: Bearer seu_token_de_acesso
+```
 ## 🌐 Principais Endpoints
 
 ### Clientes
