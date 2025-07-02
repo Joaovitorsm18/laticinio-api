@@ -10,6 +10,9 @@ class Customer(models.Model):
     name = models.CharField(max_length=100)
     nickname = models.CharField(max_length=100, blank=True, null=True)
     customer_type = models.CharField(max_length=10, choices=CUSTOMER_TYPES)
+    
+    class Meta:
+        ordering = ['name']
 
     def __str__(self):
         return self.name 
