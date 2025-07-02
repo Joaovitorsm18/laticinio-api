@@ -19,10 +19,10 @@ class SaleRetrieveUpdateDestroyView(generics.RetrieveUpdateDestroyAPIView):
 
 class SaleReportView(generics.ListAPIView):
     permission_classes = (IsAuthenticated,)
-    queryset = Sale.objects.all().prefetch_related('items', 'customer').order_by('date')
+    queryset = Sale.objects.all().prefetch_related('items', 'customer')
     serializer_class = SaleSerializer
     filter_backends = [DjangoFilterBackend]
     filterset_class = SaleFilter
     # opcional: permitir ordenação
     ordering_fields = ['date', 'customer__name', 'status']
-    ordering = ['-date']
+    
