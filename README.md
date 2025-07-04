@@ -159,6 +159,13 @@ Exemplo de payload para criação/edição:
 
 - A imagem `receipt_photo` (recibo) pode ser enviada junto, usando `multipart/form-data`.
 
+### Fornecedores
+- `GET /api/v1/suppliers/`
+- `POST /api/v1/suppliers/`
+- `GET /api/v1/suppliers/<id>/`
+- `PUT /api/v1/suppliers/<id>/`
+- `DELETE /api/v1/suppliers/<id>/`
+
 
 ---
 
@@ -171,6 +178,7 @@ laticinio-api/
 ├── customers/
 ├── products/
 ├── sales/
+├── suppliers/
 ├── media/
 ├── manage.py
 ├── requirements.txt
